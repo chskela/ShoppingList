@@ -1,4 +1,4 @@
-package com.chskela.shoppinglist
+package com.chskela.shoppinglist.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.chskela.shoppinglist.R
 import com.chskela.shoppinglist.databinding.NoteListItemBinding
 import com.chskela.shoppinglist.entities.NoteItem
 
