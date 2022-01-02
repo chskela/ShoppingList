@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.chskela.shoppinglist.R
 import com.chskela.shoppinglist.databinding.ActivityMainBinding
+import com.chskela.shoppinglist.fragments.FragmentManager
+import com.chskela.shoppinglist.fragments.NoteFragment
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -22,7 +24,7 @@ private fun setBottomNavListener() {
 
             }
             R.id.notes -> {
-
+                FragmentManager.setFragment(NoteFragment.newInstance(), this)
             }
             R.id.shop_list -> {
 
