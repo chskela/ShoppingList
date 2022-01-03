@@ -1,6 +1,7 @@
 package com.chskela.shoppinglist.db
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.chskela.shoppinglist.entities.NoteItem
@@ -14,4 +15,7 @@ interface Dao {
 
     @Insert
     suspend fun insertNote(noteItem: NoteItem)
+
+    @Delete
+    suspend fun deleteNote(noteItem: NoteItem)
 }

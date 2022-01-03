@@ -11,7 +11,7 @@ import com.chskela.shoppinglist.databinding.NoteListItemBinding
 import com.chskela.shoppinglist.entities.NoteItem
 
 
-class NoteAdapter : ListAdapter<NoteItem, NoteAdapter.ItemHolder>(ItemComparator()) {
+class NoteAdapter(private val listener: Listener) : ListAdapter<NoteItem, NoteAdapter.ItemHolder>(ItemComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder.create(parent)
@@ -19,17 +19,18 @@ class NoteAdapter : ListAdapter<NoteItem, NoteAdapter.ItemHolder>(ItemComparator
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         val noteItem = getItem(position)
-        holder.setData(noteItem)
+        holder.setData(noteItem, listener)
     }
 
     class ItemHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private val binding = NoteListItemBinding.bind(view)
 
-        fun setData(noteItem: NoteItem) = with(binding) {
+        fun setData(noteItem: NoteItem, listener: Listener) = with(binding) {
             tvTitle.text = noteItem.title
             tvDescription.text = noteItem.content
             tvTime.text = noteItem.time
+            imDelete.setOnClickListener { listener.deleteItem(noteItem) }
         }
 
         companion object {
@@ -50,6 +51,9 @@ class NoteAdapter : ListAdapter<NoteItem, NoteAdapter.ItemHolder>(ItemComparator
         override fun areContentsTheSame(oldItem: NoteItem, newItem: NoteItem): Boolean {
             return oldItem == newItem
         }
+    }
 
+    interface Listener {
+        fun deleteItem(noteItem: NoteItem)
     }
 }

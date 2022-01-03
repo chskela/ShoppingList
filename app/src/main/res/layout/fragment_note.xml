@@ -3,4 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.NoteFragment"/>
+    android:background="#6A6868"
+    tools:context=".fragments.NoteFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcViewNote"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</FrameLayout>
