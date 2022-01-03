@@ -1,13 +1,13 @@
 package com.chskela.shoppinglist.fragments
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import com.chskela.shoppinglist.R
 import com.chskela.shoppinglist.activities.MainApp
+import com.chskela.shoppinglist.activities.NewNoteActivity
 import com.chskela.shoppinglist.databinding.FragmentNoteBinding
 import com.chskela.shoppinglist.viewmodels.MainViewModel
 
@@ -21,7 +21,7 @@ class NoteFragment : BaseFragment() {
     }
 
     override fun onClickNew() {
-
+        startActivity(Intent(activity, NewNoteActivity::class.java))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

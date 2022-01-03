@@ -30,7 +30,7 @@ private fun setBottomNavListener() {
 
             }
             R.id.new_item -> {
-
+                FragmentManager.currentFragment?.onClickNew()
             }
         }
         true
