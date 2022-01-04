@@ -1,9 +1,7 @@
 package com.chskela.shoppinglist.db
 
+import androidx.room.*
 import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
 import com.chskela.shoppinglist.entities.NoteItem
 import kotlinx.coroutines.flow.Flow
 
@@ -15,6 +13,9 @@ interface Dao {
 
     @Insert
     suspend fun insertNote(noteItem: NoteItem)
+
+    @Update
+    suspend fun updateNote(noteItem: NoteItem)
 
     @Delete
     suspend fun deleteNote(noteItem: NoteItem)

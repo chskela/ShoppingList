@@ -16,11 +16,14 @@ class NewNoteActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityNewNoteBinding
 
+    private var note: NoteItem? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNewNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
         actionBarSettings()
+        getNote()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -37,9 +40,32 @@ class NewNoteActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun getNote() {
+        note = intent.getSerializableExtra(NoteFragment.NEW_NOTE_KEY) as? NoteItem
+        fillNote()
+    }
+
+    private fun fillNote() = with(binding) {
+        if (note != null) {
+            edTitle.setText(note?.title)
+            edDescription.setText(note?.content)
+        }
+    }
+
     private fun setMainResult() {
         val intent = Intent().apply {
-            putExtra(NoteFragment.NEW_NOTE_KEY, createNewNote())
+            if (note != null) {
+                putExtra(
+                    NoteFragment.EDIT_NOTE_KEY,
+                    note?.copy(
+                        title = binding.edTitle.text.toString(),
+                        content = binding.edDescription.text.toString()
+                    )
+                )
+            } else {
+                putExtra(NoteFragment.NEW_NOTE_KEY, createNewNote())
+            }
+
         }
         setResult(RESULT_OK, intent)
         finish()
@@ -55,10 +81,11 @@ class NewNoteActivity : AppCompatActivity() {
         )
     }
 
-    private fun getCurrentTime(): String {
-        val formatter = SimpleDateFormat("hh:mm:ss - yyyy/MM/dd", Locale.getDefault())
-        return formatter.format(Calendar.getInstance().time)
-    }
+    private fun getCurrentTime(): String = SimpleDateFormat(
+        "hh:mm:ss - yyyy/MM/dd",
+        Locale.getDefault()
+    ).format(Calendar.getInstance().time)
+
 
     private fun actionBarSettings() {
         val ab = supportActionBar
