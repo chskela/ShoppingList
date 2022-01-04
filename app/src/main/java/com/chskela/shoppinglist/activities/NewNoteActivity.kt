@@ -1,10 +1,16 @@
 package com.chskela.shoppinglist.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Spannable
+import android.text.style.StyleSpan
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.text.getSpans
 import com.chskela.shoppinglist.R
 import com.chskela.shoppinglist.databinding.ActivityNewNoteBinding
 import com.chskela.shoppinglist.entities.NoteItem
@@ -32,12 +38,38 @@ class NewNoteActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.id_save) {
-            setMainResult()
-        } else if (item.itemId == android.R.id.home) {
-            finish()
+        when (item.itemId) {
+            R.id.id_save -> {
+                setMainResult()
+            }
+            R.id.id_bold -> {
+                setBoldForSelectedText()
+            }
+            android.R.id.home -> {
+                finish()
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun setBoldForSelectedText() = with(binding) {
+        val startPos = edDescription.selectionStart
+        val endPos = edDescription.selectionEnd
+        val styles = edDescription.text.getSpans(startPos, endPos, StyleSpan::class.java)
+        var boldStyle: StyleSpan? = null
+
+        if (styles.isNotEmpty()) {
+            edDescription.text.removeSpan(styles[0])
+        } else {
+            boldStyle = StyleSpan(Typeface.BOLD)
+        }
+
+        edDescription.text.setSpan(
+            boldStyle,
+            startPos,
+            endPos,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
     }
 
     private fun getNote() {
