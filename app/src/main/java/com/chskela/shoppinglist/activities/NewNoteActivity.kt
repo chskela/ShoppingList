@@ -15,6 +15,7 @@ import com.chskela.shoppinglist.R
 import com.chskela.shoppinglist.databinding.ActivityNewNoteBinding
 import com.chskela.shoppinglist.entities.NoteItem
 import com.chskela.shoppinglist.fragments.NoteFragment
+import com.chskela.shoppinglist.utils.HtmlManager
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -70,6 +71,7 @@ class NewNoteActivity : AppCompatActivity() {
             endPos,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
+        edDescription.text.trim()
     }
 
     private fun getNote() {
@@ -80,7 +82,7 @@ class NewNoteActivity : AppCompatActivity() {
     private fun fillNote() = with(binding) {
         if (note != null) {
             edTitle.setText(note?.title)
-            edDescription.setText(note?.content)
+            edDescription.setText(HtmlManager.getTextFromHtml(note?.content ?: "").trim())
         }
     }
 
@@ -91,7 +93,7 @@ class NewNoteActivity : AppCompatActivity() {
                     NoteFragment.EDIT_NOTE_KEY,
                     note?.copy(
                         title = binding.edTitle.text.toString(),
-                        content = binding.edDescription.text.toString()
+                        content = HtmlManager.getHtmlFromText(binding.edDescription.text)
                     )
                 )
             } else {
@@ -107,7 +109,7 @@ class NewNoteActivity : AppCompatActivity() {
         return NoteItem(
             null,
             binding.edTitle.text.toString(),
-            binding.edDescription.text.toString(),
+            HtmlManager.getHtmlFromText(binding.edDescription.text),
             getCurrentTime(),
             ""
         )
