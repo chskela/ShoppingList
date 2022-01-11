@@ -9,4 +9,11 @@
     <string name="save">Save</string>
     <string name="delete">Delete</string>
     <string name="bold">Bold</string>
+    <string name="picker_red">picker_red</string>
+    <string name="picker_green">picker_green</string>
+    <string name="picker_blue">picker_blue</string>
+    <string name="picker_black">picker_black</string>
+    <string name="picker_yellow">picker_yellow</string>
+    <string name="picker_orange">picker_orange</string>
+    <string name="color">Color</string>
 </resources>

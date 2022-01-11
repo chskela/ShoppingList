@@ -10,6 +10,7 @@ import android.text.style.StyleSpan
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.core.text.getSpans
 import com.chskela.shoppinglist.R
 import com.chskela.shoppinglist.databinding.ActivityNewNoteBinding
@@ -43,6 +44,9 @@ class NewNoteActivity : AppCompatActivity() {
             R.id.id_save -> {
                 setMainResult()
             }
+            R.id.id_color -> {
+                showColorPicker()
+            }
             R.id.id_bold -> {
                 setBoldForSelectedText()
             }
@@ -51,6 +55,35 @@ class NewNoteActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun setMainResult() {
+        val intent = Intent().apply {
+            if (note != null) {
+                putExtra(
+                    NoteFragment.EDIT_NOTE_KEY,
+                    note?.copy(
+                        title = binding.edTitle.text.toString(),
+                        content = HtmlManager.getHtmlFromText(binding.edDescription.text)
+                    )
+                )
+            } else {
+                putExtra(NoteFragment.NEW_NOTE_KEY, createNewNote())
+            }
+
+        }
+        setResult(RESULT_OK, intent)
+        finish()
+    }
+
+    private fun showColorPicker() = with(binding){
+        Log.d("RESULT", View.GONE.toString())
+        if ( colorPicker.visibility == View.VISIBLE) {
+            colorPicker.visibility = View.GONE
+        }
+        if ( colorPicker.visibility == View.GONE) {
+            colorPicker.visibility = View.VISIBLE
+        }
     }
 
     private fun setBoldForSelectedText() = with(binding) {
@@ -86,25 +119,6 @@ class NewNoteActivity : AppCompatActivity() {
         }
     }
 
-    private fun setMainResult() {
-        val intent = Intent().apply {
-            if (note != null) {
-                putExtra(
-                    NoteFragment.EDIT_NOTE_KEY,
-                    note?.copy(
-                        title = binding.edTitle.text.toString(),
-                        content = HtmlManager.getHtmlFromText(binding.edDescription.text)
-                    )
-                )
-            } else {
-                putExtra(NoteFragment.NEW_NOTE_KEY, createNewNote())
-            }
-
-        }
-        setResult(RESULT_OK, intent)
-        finish()
-    }
-
     private fun createNewNote(): NoteItem {
         return NoteItem(
             null,
@@ -119,7 +133,6 @@ class NewNoteActivity : AppCompatActivity() {
         "hh:mm:ss - yyyy/MM/dd",
         Locale.getDefault()
     ).format(Calendar.getInstance().time)
-
 
     private fun actionBarSettings() {
         val ab = supportActionBar

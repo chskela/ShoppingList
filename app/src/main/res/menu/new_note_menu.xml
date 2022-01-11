@@ -9,8 +9,15 @@
         app:showAsAction="ifRoom"/>
 
     <item
+        android:id="@+id/id_color"
+        android:icon="@drawable/ic_color"
+        android:title="@string/color"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/id_save"
         android:icon="@drawable/ic_save"
         android:title="@string/save"
         app:showAsAction="ifRoom"/>
+
 </menu>
