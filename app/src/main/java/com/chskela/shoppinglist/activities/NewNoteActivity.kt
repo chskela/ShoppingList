@@ -77,11 +77,9 @@ class NewNoteActivity : AppCompatActivity() {
     }
 
     private fun showColorPicker() = with(binding){
-        Log.d("RESULT", View.GONE.toString())
         if ( colorPicker.visibility == View.VISIBLE) {
             colorPicker.visibility = View.GONE
-        }
-        if ( colorPicker.visibility == View.GONE) {
+        } else if ( colorPicker.visibility == View.GONE) {
             colorPicker.visibility = View.VISIBLE
         }
     }
