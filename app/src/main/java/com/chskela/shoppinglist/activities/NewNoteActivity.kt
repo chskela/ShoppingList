@@ -1,17 +1,15 @@
 package com.chskela.shoppinglist.activities
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Spannable
 import android.text.style.StyleSpan
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.core.text.getSpans
+import android.view.animation.AnimationUtils
 import com.chskela.shoppinglist.R
 import com.chskela.shoppinglist.databinding.ActivityNewNoteBinding
 import com.chskela.shoppinglist.entities.NoteItem
@@ -76,11 +74,11 @@ class NewNoteActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun showColorPicker() = with(binding){
-        if ( colorPicker.visibility == View.VISIBLE) {
-            colorPicker.visibility = View.GONE
-        } else if ( colorPicker.visibility == View.GONE) {
-            colorPicker.visibility = View.VISIBLE
+    private fun showColorPicker() = with(binding) {
+        if (colorPicker.isShown) {
+            closeColorPicker()
+        } else {
+            openColorPicker()
         }
     }
 
@@ -135,5 +133,17 @@ class NewNoteActivity : AppCompatActivity() {
     private fun actionBarSettings() {
         val ab = supportActionBar
         ab?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun openColorPicker() {
+        binding.colorPicker.visibility = View.VISIBLE
+        val openAnimation = AnimationUtils.loadAnimation(this, R.anim.open_color_picker)
+        binding.colorPicker.startAnimation(openAnimation)
+    }
+
+    private fun closeColorPicker() {
+        val closeAnimation = AnimationUtils.loadAnimation(this, R.anim.close_color_picker)
+        binding.colorPicker.startAnimation(closeAnimation)
+        binding.colorPicker.visibility = View.GONE
     }
 }
